@@ -134,7 +134,7 @@ class ProfilePage:
             if no_of_followers < min_followers:
                 a = False
             no_of_tweets_str = primary_column.find('div', attrs={
-                'class': 'css-901oao css-bfa6kz r-1re7ezh r-1qd0xha r-n6v787 r-16dba41 r-1sf4r6n r-bcqeeo r-qvutc0'}).get_text()
+                'class': 'css-901oao css-bfa6kz r-m0bqgq r-1qd0xha r-n6v787 r-16dba41 r-1sf4r6n r-bcqeeo r-qvutc0'}).get_text()
             no_of_tweets = ""
             while no_of_tweets_str[0] != " ":
                 if no_of_tweets_str[0] == ',':
@@ -174,7 +174,7 @@ class ProfilePage:
                 }).get_text()
                 if follow_status == 'Follow':
                     blacklisted_users = list()
-                    with open('DontFollow.csv', 'rt') as f:
+                    with open(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\DontFollow.csv', 'rt') as f:
                         reader = csv.DictReader(f)
                         for row in reader:
                             blacklisted_users.append(row['Username'])
@@ -185,7 +185,7 @@ class ProfilePage:
                         global no_followed_today
                         no_followed_today += 1
                         print(f'Following {user}')
-                        with open('AccountsFollowed.csv', 'a', newline='') as f:
+                        with open(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\AccountsFollowed.csv', 'a', newline='') as f:
                             writer = csv.writer(f)
                             writer.writerow(
                                 [user, datetime.datetime.now().strftime("%x")])
@@ -206,7 +206,7 @@ class ProfilePage:
 def get_garbage_words():
     try:
         garbage_words = list()
-        with open('GarbageWords.csv', 'rt') as f:
+        with open(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\GarbageWords.csv', 'rt') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 garbage_words.append(row['Word'])
@@ -256,14 +256,14 @@ def main(browser):
     login_page.login("testishaank1", "Abcd@1234")
     continuation_index = None
     filename = None
-    with open('position.csv', 'rt') as f:
+    with open(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\position.csv', 'rt') as f:
         reader = csv.DictReader(f)
         for row in reader:
             continuation_index = int(row['Index'])
             filename = row['Filename']
     if continuation_index == -1:
         competitors_list = []
-        with open("Competitors.csv", 'rt') as f:
+        with open(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\Competitors.csv', 'rt') as f:
             reader = csv.DictReader(f)
             for raw in reader:
                 competitors_list.append(raw['Competitors'])
@@ -272,27 +272,28 @@ def main(browser):
             # Change this variable to change how much of competitor's followers list is scraped/ to define the no. of scrolls to be made while scraping competitor's followers list
             scroll_limit = 40
             follower_list = profile_page.get_followers(scroll_limit)
-            with open(f'{comp}_followers.csv', 'wt', newline='') as f:
+            with open(fr'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\{comp}_followers.csv', 'wt', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(['Username'])
                 for uname in follower_list:
                     writer.writerow(
                         [uname])
-            df1 = pd.read_csv('Competitors.csv', index_col="Competitors")
+            df1 = pd.read_csv(
+                r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\Competitors.csv', index_col="Competitors")
             df1.drop([comp], inplace=True)
-            df1.to_csv('Competitors.csv')
-            with open('ProcessedCompetitors.csv', 'a', newline='') as f:
+            df1.to_csv(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\Competitors.csv')
+            with open(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\ProcessedCompetitors.csv', 'a', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow([comp])
             for index, user in enumerate(follower_list):
                 if no_followed_today >= 399:
-                    with open('position.csv', 'wt', newline='') as f:
+                    with open(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\position.csv', 'wt', newline='') as f:
                         writer = csv.writer(f)
                         writer.writerow(['Index', 'Filename'])
                         writer.writerow([index, f'{comp}_followers.csv'])
                     break
                 if user == follower_list[-1]:
-                    with open('position.csv', 'wt', newline='') as f:
+                    with open(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\position.csv', 'wt', newline='') as f:
                         writer = csv.writer(f)
                         writer.writerow(['Index', 'Filename'])
                         writer.writerow([-1, f'{comp}_followers.csv'])
@@ -307,7 +308,7 @@ def main(browser):
             competitors_list.remove(comp)
     else:
         followers_list = []
-        with open(filename, 'rt') as f:
+        with open(fr'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\{filename}', 'rt') as f:
             reader = csv.DictReader(f)
             for raw in reader:
                 followers_list.append(raw['Username'])
@@ -315,7 +316,7 @@ def main(browser):
         profile_page = ProfilePage(browser, 'botsfolio')
         for index, user in enumerate(followers_list):
             if no_followed_today >= 399:
-                with open('position.csv', 'wt', newline='') as f:
+                with open(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\position.csv', 'wt', newline='') as f:
                     writer = csv.writer(f)
                     writer.writerow(['Index', 'Filename'])
                     writer.writerow([index + continuation_index, filename])
@@ -327,7 +328,7 @@ def main(browser):
             profile_page.check_follower(
                 min_no_followers, min_no_tweets, user)
             if user == followers_list[-1]:
-                with open('position.csv', 'wt', newline='') as f:
+                with open(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\position.csv', 'wt', newline='') as f:
                     writer = csv.writer(f)
                     writer.writerow(['Index', 'Filename'])
                     writer.writerow([-1, filename])
@@ -336,7 +337,7 @@ def main(browser):
 
 if __name__ == '__main__':
     browser = webdriver.Firefox(
-        executable_path="C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\geckoDriver\\geckodriver.exe")
+        executable_path="C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\geckoDriver\\geckodriver.exe")
     browser.implicitly_wait(5)
     main(browser)
     browser.close()
