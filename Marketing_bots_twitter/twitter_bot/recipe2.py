@@ -67,7 +67,7 @@ def main(browser):
     login_page = LoginPage(browser)
     login_page.login("testishaank1", "Abcd@1234")
     followed_accounts = []
-    with open('AccountsFollowed.csv', 'rt') as f:
+    with open(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\AccountsFollowed.csv', 'rt') as f:
         reader = csv.DictReader(f)
         # Change the following variable to alter the no. of days after which no-follow users are unfollowed
         days_to_unfollow = 4
@@ -87,19 +87,20 @@ def main(browser):
         a = check_user(browser, user)
         if a:
             # Adding name to DontFollow.csv
-            with open('DontFollow.csv', 'a', newline='') as f:
+            with open(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\DontFollow.csv', 'a', newline='') as f:
                 print(f'Adding {user} to DontFollow.csv')
                 writer = csv.writer(f)
                 writer.writerow([user, datetime.datetime.now()])
             # Delete line from accountsfollowed.csv
             print(f'Deleting {user} from AccountsFollowed.csv')
-            df1 = pd.read_csv('AccountsFollowed.csv', index_col="Username")
+            df1 = pd.read_csv(
+                r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\AccountsFollowed.csv', index_col="Username")
             df1.drop([user], inplace=True)
-            df1.to_csv('AccountsFollowed.csv')
+            df1.to_csv(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\AccountsFollowed.csv')
 
 
 if __name__ == '__main__':
     browser = webdriver.Firefox(
-        executable_path="C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\Marketing_bots_twitter\\twitter_bot\\geckoDriver\\geckodriver.exe")
+        executable_path="C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\geckoDriver\\geckodriver.exe")
     browser.implicitly_wait(5)
     main(browser)

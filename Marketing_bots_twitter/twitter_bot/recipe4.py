@@ -95,7 +95,7 @@ def get_followers(browser, scroll_limit, username):
 def get_messaged_accounts():
     try:
         messaged_accounts_list = list()
-        with open('MessagedAccounts.csv', 'rt') as f:
+        with open(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\MessagedAccounts.csv', 'rt') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 messaged_accounts_list.append(row['Username'])
@@ -122,7 +122,7 @@ def get_accounts_to_be_messaged(no_of_messages, followers_list, messaged_account
 def get_welcome_message():
     try:
         welcome_messages = list()
-        with open('Welcome.csv', 'rt') as f:
+        with open(r'C:\\Users\\ISHAAN KAMRA\\VScode_temporary\\botsfolio_internship_main\\botsfolio_internship\\Marketing_bots_twitter\\twitter_bot\\Welcome.csv', 'rt') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 welcome_messages.append(row['Message'])
